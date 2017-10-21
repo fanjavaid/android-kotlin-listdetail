@@ -1,7 +1,8 @@
 package androidkotlin.fanjavaid.com.androidkotlin01.activity
 
+//import android.widget.Toast
+
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,8 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-//import android.widget.Toast
-
 import androidkotlin.fanjavaid.com.androidkotlin01.R
 
 /**
@@ -28,6 +27,7 @@ class SearchResultFragment : Fragment(), SearchResultsAdapter.OnResultItemClickL
 //        Toast.makeText(activity, "$index", Toast.LENGTH_SHORT).show()
 
         onViewDetailListener?.onViewDetail(
+                getDummySearchResults().get(index).thumbnail,
                 getDummySearchResults().get(index).title,
                 getDummySearchResults().get(index).description
         )
@@ -66,10 +66,12 @@ class SearchResultFragment : Fragment(), SearchResultsAdapter.OnResultItemClickL
 
     fun getDummySearchResults(): List<SearchResult> {
         val searchResults: List<SearchResult> = listOf(
-                SearchResult("Connect to a device over Wi-Fi", "adb usually " +
-                        "communicates with the device over USB, but you can also use adb over Wi-Fi"),
+                SearchResult("https://www.bbcgoodfood.com/sites/default/files/editor_files/" +
+                        "2016/07/instagram-symmetry-breakfast-300.jpg","Connect to a device over Wi-Fi",
+                        "adb usually communicates with the device over USB, but you can also use adb over Wi-Fi"),
 
-                SearchResult("Query for devices", "Before issuing adb commands, it is " +
+                SearchResult("https://demo.themegrill.com/flash-food/wp-content/uploads/sites/89/2016/10/blog-3-300x300.jpg","Query for devices",
+                        "Before issuing adb commands, it is " +
                         "helpful to know what device instances are connected to the adb server")
         )
 
@@ -93,6 +95,6 @@ class SearchResultFragment : Fragment(), SearchResultsAdapter.OnResultItemClickL
     }
 
     interface OnClickViewResultDetail {
-        public fun onViewDetail(title: String?, description: String?)
+        public fun onViewDetail(thumbnail: String?, title: String?, description: String?)
     }
 }// Required empty public constructor

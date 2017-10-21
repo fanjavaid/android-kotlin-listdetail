@@ -1,17 +1,22 @@
 package androidkotlin.fanjavaid.com.androidkotlin01.activity
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidkotlin.fanjavaid.com.androidkotlin01.R
+import com.bumptech.glide.Glide
 import org.jetbrains.annotations.NotNull
 
 /**
  * Created by fanjavaid on 10/20/17.
  */
 class SearchResultsAdapter(var results: List<SearchResult>?, @NotNull var listener: OnResultItemClickListener) : RecyclerView.Adapter<SearchResultsAdapter.SearchResultsViewHolder>() {
+
+    var mContext: Context? = null;
 
     override fun getItemCount(): Int {
         // Jika results == null return 0
@@ -20,6 +25,7 @@ class SearchResultsAdapter(var results: List<SearchResult>?, @NotNull var listen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SearchResultsViewHolder {
+        mContext = parent?.context
         val itemLayout = R.layout.item_result
         val inflater: LayoutInflater = LayoutInflater.from(parent?.context)
         val view = inflater.inflate(itemLayout, parent, false)
@@ -30,11 +36,16 @@ class SearchResultsAdapter(var results: List<SearchResult>?, @NotNull var listen
     override fun onBindViewHolder(holder: SearchResultsViewHolder?, position: Int) {
         val result = results?.get(position)
 
+        Glide.with(mContext)
+                .load(result?.thumbnail)
+                .into(holder?.thumbnail)
+
         holder?.title?.text = result?.title
         holder?.description?.text = result?.description
     }
 
     inner class SearchResultsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        val thumbnail = itemView?.findViewById<ImageView>(R.id.image_item_thumbnail)
         val title = itemView?.findViewById<TextView>(R.id.text_item_title)
         val description = itemView?.findViewById<TextView>(R.id.text_item_desc)
 
